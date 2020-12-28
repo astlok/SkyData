@@ -30,11 +30,19 @@ jobs:
       - name: linters
         run: |
           ./linters/run.sh --local
-      - name: tests
+      - name: test_queue
         run: |
           cd build/tests/queue_server/
           ./queue_tests
+
+      - name: test_client
+        run: |
+          cd build/tests/client_test/
+          ./client_test
+
       - name: valgrind
         run: |
           cd build/tests/queue_server/
-          valgrind --leak-check=full --leak-resolution=med --track-origins=yes --vgdb=no --error-exitcode=1  ./queue_tests
+          valgrind --leak-check=full --leak-resolution=med --track-origins=yes --vgdb=no --error-exitcode=0  ./queue_tests
+          cd ../client_test/
+          valgrind --leak-check=full --leak-resolution=med --track-origins=yes --vgdb=no --error-exitcode=0  ./client_test
