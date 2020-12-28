@@ -1,0 +1,1 @@
+dbname = postgres user = postgres password = admin hostaddr = 127.0.0.1 port = 5432
