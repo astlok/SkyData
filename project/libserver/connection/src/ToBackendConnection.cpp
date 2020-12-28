@@ -49,7 +49,7 @@ void ToBackendConnection::handle_connect(const boost::system::error_code& error)
     } else {
         isConnected = false;
         std::cerr << "ERROR: to_backend_connection::handle_connect" << std::endl;
-        std::this_thread::sleep_for(1000ms);
+        std::this_thread::sleep_for(std::chrono_literals::operator""ms(1000));
         boost::asio::async_connect(m_socket, endpoint,
                                    boost::bind(
                                            &ToBackendConnection::handle_connect,

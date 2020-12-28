@@ -16,7 +16,6 @@ set (
 
 set (
         DATABASE_SRC
-        ../data_bases/CloudStorage/src/CloudStorageDB.cpp
         ../data_bases/InternalDB/src/SQLite.cpp)
 
 set (

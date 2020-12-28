@@ -5,7 +5,6 @@
 #include <memory>
 
 #include "ClientToStorageConnection.h"
-#include "CloudStorageDB.h"
 #include "Message.h"
 
 class CloudStorageWorker {
@@ -17,7 +16,6 @@ class CloudStorageWorker {
 
 
  private:
-    CloudStorage *cloud_storage;
     std::vector<Message> *messages;
 };
 

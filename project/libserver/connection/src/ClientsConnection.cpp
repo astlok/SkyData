@@ -34,7 +34,7 @@ void ClientsConnection::handle_connect(const boost::system::error_code &error) {
                                             this,
                                             boost::asio::placeholders::error));
     } else {
-        std::this_thread::sleep_for(1000ms);
+        std::this_thread::sleep_for(std::chrono_literals::operator""ms(1000));
         // Trying to reconnect!
         boost::asio::async_connect(m_socket, endpoint,
                                    boost::bind(

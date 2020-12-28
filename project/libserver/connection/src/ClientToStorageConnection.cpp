@@ -20,7 +20,7 @@ void ClientToStorageConnection::write(const Message& msg) {
 void ClientToStorageConnection::close() {
     boost::asio::post(m_io_context,
                       boost::bind(&ClientToStorageConnection::do_close, this));
-    std::this_thread::sleep_for(2000ms);
+    std::this_thread::sleep_for(std::chrono_literals::operator""ms(2000));
     m_io_context.stop();
 }
 
@@ -36,7 +36,7 @@ void ClientToStorageConnection::handle_connect(const boost::system::error_code& 
                                             boost::asio::placeholders::error));
     } else {
         std::cerr << "ERROR: ClientToStorageConnection::handle_connect" << std::endl;
-        std::this_thread::sleep_for(1000ms);
+        std::this_thread::sleep_for(std::chrono_literals::operator""ms(1000));
         // Trying to reconnect!
         boost::asio::async_connect(m_socket, endpoint,
                                    boost::bind(
