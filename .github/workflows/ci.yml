@@ -37,12 +37,12 @@ jobs:
 
       - name: test_client
         run: |
-          cd build/tests/client_test/
+          cd build/tests/client
           ./client_test
 
       - name: valgrind
         run: |
           cd build/tests/queue_server/
-          valgrind --leak-check=full --leak-resolution=med --track-origins=yes --vgdb=no --error-exitcode=0  ./queue_tests
-          cd ../client_test/
-          valgrind --leak-check=full --leak-resolution=med --track-origins=yes --vgdb=no --error-exitcode=0  ./client_test
+          valgrind --leak-check=full --leak-resolution=med --track-origins=yes --vgdb=no ./queue_tests
+          cd ../client/
+          valgrind --leak-check=full --leak-resolution=med --track-origins=yes --vgdb=no ./client_test
