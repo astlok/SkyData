@@ -57,11 +57,11 @@ void PostgressDB::erase(Message &message) {
     std::string sql;
     std::string quote = "'";
 
-    sql = "DELETE FROM users_files "
-          "WHERE name = " + quote + message.user.user_name + quote +
-          "AND file_name = " + quote + message.file_name + quote +
-          "AND file_extension = " + quote + message.file_extension + quote +
-          "AND file_path = " + quote + message.file_path + quote;
+    sql = "DELETE FROM USERS_FILES "
+          "WHERE NAME = " + quote + message.user.user_name + quote +
+          "AND FILE_NAME = " + quote + message.file_name + quote +
+          "AND FILE_EXTENSION = " + quote + message.file_extension + quote +
+          "AND FILE_PATH = " + quote + message.file_path + quote;
 
     commit_sql_query(sql);
 }
@@ -94,11 +94,11 @@ std::vector<Message> PostgressDB::update(Message &message) {
     bool not_create = false;
     switch (message.status) {
         case LOGIN:
-            result = select("SELECT * from USERS_DEVISES "
-                            "WHERE device_name = " + quote + message.user.devise.device_name + quote);
+            result = select("SELECT * FROM USERS_DEVISES "
+                            "WHERE DEVICE_NAME = " + quote + message.user.devise.device_name + quote);
             if (result.empty()) {
-                result = select("SELECT * FROM users_files "
-                                "WHERE name = " + quote + message.user.user_name + quote);
+                result = select("SELECT * FROM USERS_FILES "
+                                "WHERE NAME = " + quote + message.user.user_name + quote);
                 for (const auto &row : result) {
                     for (const auto &field : row) {
                         vec_str.push_back(field.as<std::string>());
@@ -124,18 +124,18 @@ std::vector<Message> PostgressDB::update(Message &message) {
             }
             return messages;
         case CREATE:
-            result = select("SELECT * FROM users_files "
-                            "WHERE file_name = " + quote + message.file_name + quote + " " +
-                            "AND file_extension = " + quote + message.file_extension + quote + " "
-                            "AND name = " + quote + message.user.user_name + quote);
+            result = select("SELECT * FROM USERS_FILES "
+                            "WHERE FILE_NAME = " + quote + message.file_name + quote + " " +
+                            "AND FILE_EXTENSION = " + quote + message.file_extension + quote + " "
+                            "AND NAME = " + quote + message.user.user_name + quote);
 
             if (!result.empty()) {
                 not_create = true;
             }
 
-            result = select("SELECT * FROM users_devises "
-                            "WHERE name = " + quote + message.user.user_name + quote + " "
-                            "AND device_name != " +  quote + message.user.devise.device_name + quote);
+            result = select("SELECT * FROM USERS_DEVISES "
+                            "WHERE NAME = " + quote + message.user.user_name + quote + " "
+                            "AND DEVICE_NAME != " +  quote + message.user.devise.device_name + quote);
             for (const auto &row : result) {
                 for (const auto &field : row) {
                     vec_str.push_back(field.as<std::string>());
@@ -157,9 +157,9 @@ std::vector<Message> PostgressDB::update(Message &message) {
             if (message.status == MODIFIED) {
                 modified(message);
             }
-            result = select("SELECT * FROM users_devises "
-                            "WHERE name = " + quote + message.user.user_name + quote + " " +
-                            "AND device_name != "  +  quote + message.user.devise.device_name + quote);
+            result = select("SELECT * FROM USERS_DEVISES "
+                            "WHERE NAME = " + quote + message.user.user_name + quote + " " +
+                            "AND DEVICE_NAME != "  +  quote + message.user.devise.device_name + quote);
             for (const auto &row : result) {
                 for (const auto &field : row) {
                     vec_str.push_back(field.as<std::string>());
@@ -233,9 +233,9 @@ bool PostgressDB::create_users_files_table() {
 
 bool PostgressDB::modified(Message &message) {
     std::string quote = "'";
-    std::string sql = "UPDATE users_files set file_size = " + std::to_string(message.file_size) + " "
-                      "WHERE file_name = " + quote + message.file_name + quote + " "
-                      "AND file_extension = " + quote + message.file_extension + quote + " "
+    std::string sql = "UPDATE USERS_FILES SET FILE_SIZE = " + std::to_string(message.file_size) + " "
+                      "WHERE FILE_NAME = " + quote + message.file_name + quote + " "
+                      "AND FILE_EXTENSION = " + quote + message.file_extension + quote + " "
                                                                                                                                                     "AND name = " + quote + message.user.user_name + quote;
     commit_sql_query(sql);
     return false;

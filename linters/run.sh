@@ -8,7 +8,7 @@ function print_header() {
 }
 
 print_header "RUN cpplint.py"
-python2.7 ./linters/cpplint/cpplint.py --extensions=cpp --headers=h,hpp --filter=-runtime/references,-legal/copyright,-build/include_subdir,-whitespace/line_length,-build/c++11,-runtime/int,-readability/inheritance,-runtime/indentation_namespace \
+python2.7 ./linters/cpplint/cpplint.py --extensions=cpp --headers=h,hpp --filter=-runtime/references,-legal/copyright,-build/include_subdir,-whitespace/line_length,-build/c++11,-runtime/int,-readability/inheritance,-runtime/indentation_namespace,-runtime/string,-build/include,-whitespace/blank_line,-whitespace/indent \
 project/data_bases/MetadataDB/src/* \
 project/client/indexer/include/* \
 project/client/indexer/src/* \
