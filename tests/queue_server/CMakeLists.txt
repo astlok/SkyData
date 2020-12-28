@@ -23,5 +23,5 @@ set(QUEUE_SRC ../../project/queue_server/src/QueueManager.cpp
               ../../project/queue_server/src/StdQueue.cpp)
 
 
-add_executable(tests_gmock main.cpp ${TEST_SRC} ${SOCKET_SRC} ${QUEUE_SRC} ${SERVER_SRC} ${LIB_SOURCE_FILES})
-target_link_libraries(tests_gmock  ${GTEST_LIBRARIES} pthread -lgtest)
+add_executable(queue_tests main.cpp ${TEST_SRC} ${SOCKET_SRC} ${QUEUE_SRC} ${SERVER_SRC} ${LIB_SOURCE_FILES})
+target_link_libraries(queue_tests  ${GTEST_LIBRARIES} pthread -lgtest)

@@ -21,7 +21,6 @@ void PostgressDB::close() {
 }
 
 void PostgressDB::insert_file(Message &message) {
-
     std::string sql;
     std::string quote = "'";
 
@@ -38,11 +37,11 @@ void PostgressDB::insert_file(Message &message) {
           + quote + message.file_path + quote + ", "
           + quote + message.user.devise.sync_folder + quote + ", "
           + std::to_string(message.user.quota_limit) + ");";
-
+  
     commit_sql_query(sql);
 }
-void PostgressDB::insert_devise(Message &message) {
 
+void PostgressDB::insert_devise(Message &message) {
     std::string sql;
     std::string quote = "'";
 
@@ -71,7 +70,7 @@ void PostgressDB::erase(Message &message) {
 pqxx::result PostgressDB::select(const std::string& sql_select) {
     pqxx::nontransaction nontransaction(*m_connect);
 
-    pqxx::result pq_result (nontransaction.exec(sql_select));
+    pqxx::result pq_result(nontransaction.exec(sql_select));
 
     return pq_result;
 }
@@ -94,15 +93,15 @@ std::vector<Message> PostgressDB::update(Message &message) {
     pqxx::result result;
     std::vector<std::string> vec_str;
     bool not_create = false;
-    switch(message.status) {
+    switch (message.status) {
         case LOGIN:
             result = select("SELECT * from USERS_DEVISES "
                             "WHERE device_name = " + quote + message.user.devise.device_name + quote);
             if (result.empty()) {
                 result = select("SELECT * FROM users_files "
                                 "WHERE name = " + quote + message.user.user_name + quote);
-                for (const auto &row: result) {
-                    for (const auto &field: row) {
+                for (const auto &row : result) {
+                    for (const auto &field : row) {
                         vec_str.push_back(field.as<std::string>());
                     }
                 }
@@ -138,6 +137,7 @@ std::vector<Message> PostgressDB::update(Message &message) {
             result = select("SELECT * FROM users_devises "
                             "WHERE name = " + quote + message.user.user_name + quote + " "
                             "AND device_name != " +  quote + message.user.devise.device_name + quote);
+        
             for (const auto &row: result) {
                 for (const auto &field: row) {
                     vec_str.push_back(field.as<std::string>());
@@ -162,8 +162,8 @@ std::vector<Message> PostgressDB::update(Message &message) {
             result = select("SELECT * FROM users_devises "
                             "WHERE name = " + quote + message.user.user_name + quote + " " +
                             "AND device_name != "  +  quote + message.user.devise.device_name + quote);
-            for (const auto &row: result) {
-                for (const auto &field: row) {
+            for (const auto &row : result) {
+                for (const auto &field : row) {
                     vec_str.push_back(field.as<std::string>());
                 }
             }
