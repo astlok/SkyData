@@ -1,8 +1,10 @@
-#ifndef ASYNC_CLIENT_QUEUE_SERVER_ABSTRACT_SERVER_H
-#define ASYNC_CLIENT_QUEUE_SERVER_ABSTRACT_SERVER_H
+#ifndef PROJECT_LIBSERVER_ASYNC_SERVER_INCLUDE_ABSTRACTSERVER_H_
+#define PROJECT_LIBSERVER_ASYNC_SERVER_INCLUDE_ABSTRACTSERVER_H_
 
 #include <cstdlib>
 #include <deque>
+#include <set>
+#include <string>
 #include <memory>
 #include <iostream>
 #include <boost/bind.hpp>
@@ -20,7 +22,7 @@
 #endif
 
 class AbstractServer{
-public:
+ public:
     AbstractServer(boost::asio::io_context& io_context, const boost::asio::ip::tcp::endpoint& endpoint):
         m_io_context(io_context),
         m_acceptor(io_context, endpoint) { ; }
@@ -56,9 +58,9 @@ public:
         for (auto& connection : m_connections) {
             if (connection->id == id) {
                 m_connections.erase(connection);
-                //Pushing message, which was send unsuccessfully
+                // Pushing message, which was send unsuccessfully
                 QueueManager::queue_manager().push_to_client_queue(message, connection->id);
-                //The last success message sended may be not sended at all!
+                // The last success message sended may be not sended at all!
                 if (!connection->last_success_message_send.empty()) {
                     QueueManager::queue_manager().push_to_client_queue(connection->last_success_message_send,
                                                                        connection->id);
@@ -80,10 +82,10 @@ public:
 
     virtual void send_message_if_connected(const std::string &connectionID) { ; }
 
-protected:
+ protected:
     boost::asio::io_context& m_io_context;
     boost::asio::ip::tcp::acceptor m_acceptor;
     std::set<boost::shared_ptr<ServerConnection>> m_connections;
 };
 
-#endif //ASYNC_CLIENT_QUEUE_SERVER_ABSTRACT_SERVER_H
+#endif  // PROJECT_LIBSERVER_ASYNC_SERVER_INCLUDE_ABSTRACTSERVER_H_

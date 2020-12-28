@@ -1,3 +1,7 @@
+#include <sys/inotify.h>
+#include <sys/ioctl.h>
+#include <sys/select.h>
+#include <unistd.h>
 #include <cassert>
 #include <cerrno>
 #include <cstddef>
@@ -12,10 +16,6 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
-#include <sys/inotify.h>
-#include <sys/ioctl.h>
-#include <sys/select.h>
-#include <unistd.h>
 
 #include "Listener.h"
 
@@ -49,11 +49,11 @@ namespace gogo {
 
 // Singleton to manage all inotify watches.
         class InotifyReader : private boost::noncopyable {
-        public:
-            using Watch = int; // Watch descriptor used by AddWatch() and RemoveWatch().
+         public:
+            using Watch = int;  // Watch descriptor used by AddWatch() and RemoveWatch().
             static constexpr Watch INVALID_WATCH = -1;
 
-        public:
+         public:
             // Watch directory |path| for changes. |watcher| will be notified on each
             // change. Returns |INVALID_WATCH| on failure.
             Watch AddWatch(const FilePath &path, FilePathWatcherImpl *watcher);
@@ -74,7 +74,7 @@ namespace gogo {
 
             std::recursive_mutex &GetMutex() { return mutex_; }
 
-        private:
+         private:
             InotifyReader();
 
             ~InotifyReader() = default;
@@ -85,7 +85,7 @@ namespace gogo {
             // Thread entry point
             void ThreadMain();
 
-        private:
+         private:
             // We keep track of which delegates want to be notified on which watches.
             std::unordered_map<Watch, std::unordered_set<FilePathWatcherImpl *>> watchers_;
 
@@ -103,7 +103,7 @@ namespace gogo {
         };
 
         class FilePathWatcherImpl : public FilePathWatcher::FilePathWatcherDelegate {
-        public:
+         public:
             FilePathWatcherImpl() = default;
 
             ~FilePathWatcherImpl() override = default;
@@ -120,7 +120,7 @@ namespace gogo {
                                    bool deleted,
                                    bool is_dir);
 
-        private:
+         private:
             FilePath main_path_;
 
             // Inotify watches are installed for all directory components of |target_|.
@@ -142,7 +142,7 @@ namespace gogo {
                 gogo::FilePath full_path;
             };
 
-        private:
+         private:
             // Start watching |path| for changes and notify |delegate| on each change.
             // Returns true if watch for |path| has been added successfully.
             bool Watch(const FilePath &path,
@@ -163,7 +163,7 @@ namespace gogo {
 
             bool HasValidWatchVector() const;
 
-        private:
+         private:
             // Callback to notify upon changes.
             FilePathWatcher::Callback callback_;
 
@@ -345,7 +345,6 @@ namespace gogo {
                     RecurciveUpdateWatches(i->path(), ii);
                 }
             }
-
         }
 
         void FilePathWatcherImpl::UpdateWatches() {
@@ -473,8 +472,7 @@ namespace gogo {
         watchers_.
         erase(watch);
 
-        inotify_rm_watch(inotify_fd_, watch
-        );
+        inotify_rm_watch(inotify_fd_, watch);
     }
 }
 
@@ -533,8 +531,8 @@ bool FilePathWatcherImpl::HasValidWatchVector() const {
     return watches_.back().subdir.empty();
 }
 
-} // namespace
-} // namespace gogo
+}  // namespace
+}  // namespace gogo
 
 namespace gogo {
 
@@ -555,4 +553,4 @@ namespace gogo {
         impl_->Cancel();
     }
 
-} // namespace gogo
+}  // namespace gogo

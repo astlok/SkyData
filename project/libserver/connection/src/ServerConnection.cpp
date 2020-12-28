@@ -30,7 +30,7 @@ void ServerConnection::handle_read(const boost::system::error_code &error) {
         long offset = static_cast<char *>(memchr(m_read_msg, '\b', BUFFER_SIZE)) - m_read_msg;
 
 
-        std::string str_mes (m_read_msg, offset);
+        std::string str_mes(m_read_msg, offset);
         std::stringstream str(str_mes);
         boost::archive::text_iarchive iarch(str);
         Message msg;

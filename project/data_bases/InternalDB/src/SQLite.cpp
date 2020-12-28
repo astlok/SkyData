@@ -49,7 +49,7 @@ int SQLite::create_table_messages() {
 }
 
 int SQLite::callback(void *is_find, int argc, char **argv, char **azColName) {
-    bool *i = (bool *)is_find;
+    bool *i = reinterpret_cast<bool *>(is_find);
     *i = true;
     return EXIT_SUCCESS;
 }
@@ -80,7 +80,6 @@ bool SQLite::insert(Message &message) {
 
 bool SQLite::del(Message &message) {
     std::string comma = ",";
-    //std::string quotes = " ";
     std::string sql = (std::string) "DELETE FROM MESSAGES WHERE file_name="
                       + '"' + message.file_name + '"' + (std::string) ";";
 

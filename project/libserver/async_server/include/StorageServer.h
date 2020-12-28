@@ -1,10 +1,12 @@
-#ifndef ASYNC_CLIENT_QUEUE_SERVER_STORAGESERVER_H
-#define ASYNC_CLIENT_QUEUE_SERVER_STORAGESERVER_H
+#ifndef PROJECT_LIBSERVER_ASYNC_SERVER_INCLUDE_STORAGESERVER_H_
+#define PROJECT_LIBSERVER_ASYNC_SERVER_INCLUDE_STORAGESERVER_H_
+
+#include <string>
 
 #include "AbstractServer.h"
 
 class StorageServer : public AbstractServer {
-public:
+ public:
     StorageServer(boost::asio::io_context& io_context,
                   const boost::asio::ip::tcp::endpoint& endpoint);
 
@@ -16,4 +18,4 @@ public:
     std::string storage_directory;
 };
 
-#endif //ASYNC_CLIENT_QUEUE_SERVER_STORAGESERVER_H
+#endif  // PROJECT_LIBSERVER_ASYNC_SERVER_INCLUDE_STORAGESERVER_H_

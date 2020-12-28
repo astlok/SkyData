@@ -1,10 +1,13 @@
-#ifndef PROJECT_DATABASE_H
-#define PROJECT_DATABASE_H
+#ifndef PROJECT_DATA_BASES_METADATADB_INCLUDE_DATABASE_H_
+#define PROJECT_DATA_BASES_METADATADB_INCLUDE_DATABASE_H_
 
 #include "Message.h"
 
+#include <vector>
+#include <string>
+
 class DataBase {
-public:
+ public:
     DataBase() = default;
 
     virtual ~DataBase() = default;
@@ -14,7 +17,6 @@ public:
     virtual bool open(std::string& config) = 0;
 
     virtual void close() = 0;
-
 };
 
-#endif //PROJECT_DATABASE_H
+#endif  // PROJECT_DATA_BASES_METADATADB_INCLUDE_DATABASE_H_

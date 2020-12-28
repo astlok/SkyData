@@ -1,6 +1,8 @@
-#ifndef ASYNC_CLIENT_QUEUE_SERVER_SERVER_CONNECTION_H
-#define ASYNC_CLIENT_QUEUE_SERVER_SERVER_CONNECTION_H
+#ifndef PROJECT_LIBSERVER_CONNECTION_INCLUDE_SERVERCONNECTION_H_
+#define PROJECT_LIBSERVER_CONNECTION_INCLUDE_SERVERCONNECTION_H_
 
+#include <memory>
+#include <string>
 
 #include "Message.h"
 #include "AbstractConnection.h"
@@ -8,7 +10,7 @@
 class AbstractServer;
 
 class ServerConnection : public AbstractConnection, public boost::enable_shared_from_this<ServerConnection> {
-public:
+ public:
     ServerConnection(boost::asio::io_context& io_context, std::shared_ptr<AbstractServer> srvr);
     virtual ~ServerConnection() = default;
 
@@ -20,9 +22,9 @@ public:
     void handle_write(const boost::system::error_code& error) override;
     void do_write(const std::string& msg = "");
 
-private:
+ private:
     std::shared_ptr<AbstractServer> m_server_ptr;
 };
 
 
-#endif //ASYNC_CLIENT_QUEUE_SERVER_SERVER_CONNECTION_H
+#endif  // PROJECT_LIBSERVER_CONNECTION_INCLUDE_SERVERCONNECTION_H_

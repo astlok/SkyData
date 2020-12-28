@@ -2,8 +2,8 @@ include_directories(../../project/client/observer/include)
 include_directories("../../project/common")
 include_directories(./project/client/observer)
 include_directories(../../project/client/indexer/include)
-include_directories(../../project/data_bases/Cloud_Storage/include)
-include_directories(../../project/data_bases/Internal_DB/include)
+include_directories(../../project/data_bases/CloudStorage/include)
+include_directories(../../project/data_bases/InternalDB/include)
 include_directories(../../project/common)
 include_directories(../../project/libserver/async_server/include)
 include_directories(../../project/libserver/connection/include)
@@ -27,8 +27,8 @@ set (
 
 set (
         DB_SRC
-        ../../project/data_bases/Cloud_Storage/src/CloudStorageDB.cpp
-        ../../project/data_bases/Internal_DB/src/SQLite.cpp
+        ../../project/data_bases/CloudStorage/src/CloudStorageDB.cpp
+        ../../project/data_bases/InternalDB/src/SQLite.cpp
 )
 
 set (

@@ -1,8 +1,10 @@
-#ifndef ASYNC_CLIENT_QUEUE_SERVER_MESSAGE_H
-#define ASYNC_CLIENT_QUEUE_SERVER_MESSAGE_H
+#ifndef PROJECT_COMMON_MESSAGE_H_
+#define PROJECT_COMMON_MESSAGE_H_
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <memory>
 #include <boost/serialization/access.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
@@ -13,17 +15,14 @@ struct devise_t {
     std::string sync_folder;
 
 
-private:
+ private:
     friend class boost::serialization::access;
     template<class Archive>
-    void serialize(Archive & ar, const unsigned int vers)
-    {
+    void serialize(Archive & ar, const unsigned int vers) {
         ar & device_name;
         ar & sync_folder;
     }
-
 } typedef devise_t;
-
 
 struct user_t {
     std::string user_name;
@@ -31,11 +30,10 @@ struct user_t {
     devise_t devise;
     int quota_limit;
 
-private:
+ private:
     friend class boost::serialization::access;
     template<class Archive>
-    void serialize(Archive & ar, const unsigned int vers)
-    {
+    void serialize(Archive & ar, const unsigned int vers) {
         ar & user_name;
         ar & email;
         ar & devise;
@@ -44,12 +42,12 @@ private:
 } typedef User;
 
 enum status_t {
-    LOGIN,      // логин
-    CREATE,     // новый файл
-    DELETE,     // файл удален
-    MODIFIED,   // файл изменен
-    DOWNLOAD_FILE, // файл загрузили
-    PUSH_FILE, // файл добавили
+    LOGIN,           // логин
+    CREATE,         // новый файл
+    DELETE,         // файл удален
+    MODIFIED,       // файл изменен
+    DOWNLOAD_FILE,  // файл загрузили
+    PUSH_FILE,      // файл добавили
 };
 
 struct Message {
@@ -78,11 +76,10 @@ struct Message {
         return out;
     }
 
-private:
+ private:
     friend class boost::serialization::access;
     template<class Archive>
-    void serialize(Archive & ar, const unsigned int vers)
-    {
+    void serialize(Archive & ar, const unsigned int vers) {
         ar & version;
         ar & status;
         ar & times_modified;
@@ -97,4 +94,4 @@ private:
 
 std::string serialize(Message &message);
 std::shared_ptr<Message> deserialize(const std::string &buf);
-#endif //ASYNC_CLIENT_QUEUE_SERVER_MESSAGE_H
+#endif  // PROJECT_COMMON_MESSAGE_H_

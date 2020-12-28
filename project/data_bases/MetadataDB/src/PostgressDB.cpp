@@ -37,7 +37,6 @@ void PostgressDB::insert_file(Message &message) {
           + quote + message.file_path + quote + ", "
           + quote + message.user.devise.sync_folder + quote + ", "
           + std::to_string(message.user.quota_limit) + ");";
-  
     commit_sql_query(sql);
 }
 
@@ -137,9 +136,8 @@ std::vector<Message> PostgressDB::update(Message &message) {
             result = select("SELECT * FROM users_devises "
                             "WHERE name = " + quote + message.user.user_name + quote + " "
                             "AND device_name != " +  quote + message.user.devise.device_name + quote);
-        
-            for (const auto &row: result) {
-                for (const auto &field: row) {
+            for (const auto &row : result) {
+                for (const auto &field : row) {
                     vec_str.push_back(field.as<std::string>());
                 }
             }
@@ -186,7 +184,7 @@ bool PostgressDB::create_users_devises_table() {
     std::string  sql;
 
     try {
-        //FIXME: For demonstration, delete for release
+        //  FIXME: For demonstration, delete for release
         sql = "DROP TABLE IF EXISTS USERS_DEVISES;";
         commit_sql_query(sql);
 
@@ -208,7 +206,7 @@ bool PostgressDB::create_users_files_table() {
     std::string  sql;
 
     try {
-        //FIXME: For demonstration, delete for release
+        //  FIXME: For demonstration, delete for release
         sql = "DROP TABLE IF EXISTS USERS_FILES;";
         commit_sql_query(sql);
 

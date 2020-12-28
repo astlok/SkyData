@@ -2,7 +2,6 @@
 
 Message EventListen::get_message() {
     return message;
-
 }
 
 

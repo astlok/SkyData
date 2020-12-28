@@ -1,24 +1,19 @@
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdlib.h>
 #include <iostream>
 #include <stdexcept>
 
-#include <fcntl.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-
 #include "Listener.h"
-//#include "common/eintr_wrapper.hpp"
 
-namespace gogo
-{
-    namespace
-    {
+namespace gogo {
+    namespace {
 // Directory name template must contain XXXXXX.
         constexpr char TEMP_FILE_NAME[] = "gogo.tmp.XXXXXX";
     }
 
     static FilePath CreateTemporaryDirInDirImpl(const FilePath& base_dir,
-                                                const std::string& name_tmpl)
-    {
+                                                const std::string& name_tmpl) {
         FilePath sub_dir = base_dir / name_tmpl;
         const std::string sub_dir_string = sub_dir.native();
 
@@ -31,8 +26,7 @@ namespace gogo
         return FilePath(dtemp);
     }
 
-    FilePath GetTempDir() noexcept
-    {
+    FilePath GetTempDir() noexcept {
         const char* tmp = getenv("TMPDIR");
         if (tmp)
             return FilePath(tmp);
@@ -40,25 +34,21 @@ namespace gogo
         return FilePath("/tmp");
     }
 
-    FilePath CreateNewTempDirectory()
-    {
+    FilePath CreateNewTempDirectory() {
         return CreateTemporaryDirInDirImpl(GetTempDir(), TEMP_FILE_NAME);
     }
 
     FilePath CreateTemporaryDirInDir(const FilePath& base_dir,
-                                     const std::string& prefix)
-    {
+                                     const std::string& prefix) {
         const std::string mkdtemp_template = prefix + "XXXXXX";
         return CreateTemporaryDirInDirImpl(base_dir, mkdtemp_template);
     }
 
-    bool WriteFileDescriptor(const int fd, const char* data, int size) noexcept
-    {
+    bool WriteFileDescriptor(const int fd, const char* data, int size) noexcept {
         // Allow for partial writes.
         ssize_t bytes_written_total = 0;
         for (ssize_t bytes_written_partial = 0; bytes_written_total < size;
-             bytes_written_total += bytes_written_partial)
-        {
+             bytes_written_total += bytes_written_partial) {
             bytes_written_partial = HANDLE_EINTR(write(fd, data + bytes_written_total,
                                                        size - bytes_written_total));
             if (bytes_written_partial < 0)
@@ -68,8 +58,7 @@ namespace gogo
         return true;
     }
 
-    int WriteFile(const FilePath& filename, const char* data, int size) noexcept
-    {
+    int WriteFile(const FilePath& filename, const char* data, int size) noexcept {
         const int mode = 0666;
         const int fd = HANDLE_EINTR(creat(filename.native().c_str(), mode));
         if (fd < 0)
@@ -81,4 +70,4 @@ namespace gogo
         return bytes_written;
     }
 
-} // namespace gogo
+}  // namespace gogo

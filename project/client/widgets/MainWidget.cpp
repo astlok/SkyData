@@ -1,4 +1,5 @@
 #include "MainWidget.h"
+
 #include <QtWidgets>
 #include <iostream>
 
@@ -13,7 +14,7 @@ MainWidget::MainWidget(std::string &name, std::string &device, std::string &sync
     m_dialog = new QFileDialog();
 
     m_line_edits.resize(3);
-    for (auto &m_line_edit: m_line_edits) {
+    for (auto &m_line_edit : m_line_edits) {
         m_line_edit = new QLineEdit();
     }
 
@@ -21,8 +22,8 @@ MainWidget::MainWidget(std::string &name, std::string &device, std::string &sync
     m_labels.push_back(new QLabel("Device name:"));
     m_labels.push_back(new QLabel("Sync folder:"));
 
-    m_main_layout->addWidget(m_button,4,1);
-    m_main_layout->addWidget(m_button_dialog,3,1);
+    m_main_layout->addWidget(m_button, 4, 1);
+    m_main_layout->addWidget(m_button_dialog, 3, 1);
     for (size_t i = 0; i < m_line_edits.size(); ++i) {
         m_main_layout->addWidget(m_line_edits[i], i, 1);
     }
@@ -33,18 +34,16 @@ MainWidget::MainWidget(std::string &name, std::string &device, std::string &sync
     setWindowTitle(tr("SkyData"));
     connect(m_button, SIGNAL(released()), this, SLOT(onButtonReleased()));
     connect(m_button_dialog, SIGNAL(released()), this, SLOT(onDialogButton()));
-
 }
 
-MainWidget::~MainWidget()
-{
+MainWidget::~MainWidget() {
     delete m_button;
     delete m_dialog;
     delete m_main_layout;
     for (auto line : m_line_edits) {
         delete line;
     }
-    for (auto label: m_labels) {
+    for (auto label : m_labels) {
         delete label;
     }
 }

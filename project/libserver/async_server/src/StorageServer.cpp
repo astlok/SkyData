@@ -1,8 +1,9 @@
-#include <fstream>
-#include "StorageServer.h"
-#include "Message.h"
 #include <sys/stat.h>
 #include <filesystem>
+#include <fstream>
+
+#include "StorageServer.h"
+#include "Message.h"
 
 void StorageServer::start_accept() {
     boost::shared_ptr<ServerConnection> new_connect(new ServerConnection(m_io_context,
@@ -30,15 +31,14 @@ void StorageServer::on_read_message(char* msg_str) {
     Message msg;
     iarch >> msg;
     if (msg.status == status_t::DOWNLOAD_FILE) {
-        for (auto &connection: m_connections) {
+        for (auto &connection : m_connections) {
             if (connection->id == msg.user.user_name + msg.user.devise.device_name) {
                 boost::bind(&ServerConnection::find_file_and_send, _1, storage_directory, msg, storage_directory)
                            (connection);
                 break;
             }
         }
-    }
-    else if (msg.status == status_t::PUSH_FILE) {
+    } else if (msg.status == status_t::PUSH_FILE) {
         // Check if directory exists
         if (!std::filesystem::exists(storage_directory + msg.user.user_name)) {
             std::filesystem::create_directories(storage_directory +  msg.user.user_name);
@@ -55,10 +55,9 @@ void StorageServer::on_read_message(char* msg_str) {
                 msg.file_path + "/" +
                 msg.file_name + msg.file_extension,
                 std::ios::binary | std::ios::out);
-        file.write((char*)&msg.RAW_BYTES[0], msg.RAW_BYTES.size());
+        file.write(reinterpret_cast<char*>(&msg.RAW_BYTES[0]), msg.RAW_BYTES.size());
         file.close();
-    }
-    else if (msg.status == status_t::DELETE) {
+    } else if (msg.status == status_t::DELETE) {
         std::filesystem::remove(
                 storage_directory +
                 msg.user.user_name + "/" +

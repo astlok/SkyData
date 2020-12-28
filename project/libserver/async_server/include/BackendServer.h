@@ -1,12 +1,14 @@
-#ifndef ASYNC_CLIENT_QUEUE_SERVER_BACKEND_SERVER_H
-#define ASYNC_CLIENT_QUEUE_SERVER_BACKEND_SERVER_H
+#ifndef PROJECT_LIBSERVER_ASYNC_SERVER_INCLUDE_BACKENDSERVER_H_
+#define PROJECT_LIBSERVER_ASYNC_SERVER_INCLUDE_BACKENDSERVER_H_
+
+#include <memory>
+#include <string>
 
 #include "AbstractServer.h"
 #include "DataBase.h"
 
 class BackendServer : public AbstractServer {
-public:
-
+ public:
     BackendServer(boost::asio::io_context& io_context,
                   const boost::asio::ip::tcp::endpoint& endpoint,
                   std::shared_ptr<DataBase> data_base);
@@ -22,10 +24,10 @@ public:
 
     std::shared_ptr<Message> deserialize(std::string_view buf);
 
-private:
+ private:
     virtual void deliver_for_all(std::string msg) override;
     std::shared_ptr<DataBase> m_data_base;
 };
 
 
-#endif //ASYNC_CLIENT_QUEUE_SERVER_BACKEND_SERVER_H
+#endif  // PROJECT_LIBSERVER_ASYNC_SERVER_INCLUDE_BACKENDSERVER_H_

@@ -1,5 +1,5 @@
-#include <iostream>
 #include <QtWidgets>
+#include <iostream>
 
 #include "ClientsConnection.h"
 #include "MessageUpdater.h"
@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
         std::ofstream fout("config.txt");
         fout << name << std::endl << device << std::endl << sync_folder;
         fout.close();
-    };
+    }
     fin.close();
 
     Observer observer(name, device, sync_folder);

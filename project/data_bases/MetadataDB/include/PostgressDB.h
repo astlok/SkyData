@@ -1,14 +1,17 @@
-#ifndef PROJECT_POSTGRESSDB_H
-#define PROJECT_POSTGRESSDB_H
+#ifndef PROJECT_DATA_BASES_METADATADB_INCLUDE_POSTGRESSDB_H_
+#define PROJECT_DATA_BASES_METADATADB_INCLUDE_POSTGRESSDB_H_
 
-#include <string_view>
 #include <pqxx/pqxx>
+#include <string_view>
+#include <vector>
+#include <string>
+#include <memory>
 
 #include "DataBase.h"
 #include "Message.h"
 
 class PostgressDB: public DataBase {
-public:
+ public:
     PostgressDB();
 
     ~PostgressDB() override;
@@ -19,7 +22,7 @@ public:
 
     virtual void close() override;
 
-private:
+ private:
     void insert_devise(Message &message);
 
     void insert_file(Message &message);
@@ -36,8 +39,8 @@ private:
 
     void erase(Message &message);
 
-private:
+ private:
     std::shared_ptr<pqxx::connection> m_connect;
 };
 
-#endif //PROJECT_POSTGRESSDB_H
+#endif  // PROJECT_DATA_BASES_METADATADB_INCLUDE_POSTGRESSDB_H_

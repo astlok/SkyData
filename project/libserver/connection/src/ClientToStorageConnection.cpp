@@ -20,7 +20,6 @@ void ClientToStorageConnection::write(const Message& msg) {
 void ClientToStorageConnection::close() {
     boost::asio::post(m_io_context,
                       boost::bind(&ClientToStorageConnection::do_close, this));
-    using namespace std::chrono_literals;
     std::this_thread::sleep_for(2000ms);
     m_io_context.stop();
 }
@@ -37,7 +36,6 @@ void ClientToStorageConnection::handle_connect(const boost::system::error_code& 
                                             boost::asio::placeholders::error));
     } else {
         std::cerr << "ERROR: ClientToStorageConnection::handle_connect" << std::endl;
-        using namespace std::chrono_literals;
         std::this_thread::sleep_for(1000ms);
         // Trying to reconnect!
         boost::asio::async_connect(m_socket, endpoint,
@@ -74,7 +72,7 @@ void ClientToStorageConnection::handle_read(const boost::system::error_code& err
                     msg.file_name + msg.file_extension,
                     std::ios::binary | std::ios::out);
         }
-        file.write((char*)&msg.RAW_BYTES[0], msg.RAW_BYTES.size());
+        file.write(reinterpret_cast<char*>(&msg.RAW_BYTES[0]), msg.RAW_BYTES.size());
         file.close();
 
         boost::asio::async_read(m_socket,
@@ -85,8 +83,7 @@ void ClientToStorageConnection::handle_read(const boost::system::error_code& err
                                         &ClientToStorageConnection::handle_read,
                                         this,
                                         boost::asio::placeholders::error));
-    }
-    else {
+    } else {
         do_close();
         std::cerr << "ERROR: ClientToStorageConnection::handle_write" << std::endl;
         std::cerr << "Trying to reconnect!" << std::endl;
@@ -111,7 +108,7 @@ void ClientToStorageConnection::do_write(Message msg, bool continue_writing) {
                     msg.file_name + msg.file_extension,
                     std::ios::binary | std::ios::in);
             char c = file.get();
-            while(file.good()) {
+            while (file.good()) {
                 msg.RAW_BYTES.push_back(c);
                 c = file.get();
             }

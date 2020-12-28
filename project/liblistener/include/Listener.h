@@ -4,6 +4,7 @@
 #pragma once
 
 #include <functional>
+#include <memory>
 
 #include <boost/filesystem.hpp>
 #include <boost/noncopyable.hpp>
@@ -72,7 +73,7 @@ file_path_watcher.Watch(path, callback);
 
         // Used internally to encapsulate all logic.
         class FilePathWatcherDelegate : private boost::noncopyable {
-        public:
+         public:
             FilePathWatcherDelegate() = default;
 
             virtual ~FilePathWatcherDelegate() = default;
@@ -85,7 +86,7 @@ file_path_watcher.Watch(path, callback);
             // allow to shut down properly while the object is still alive.
             virtual void Cancel() = 0;
 
-        protected:
+         protected:
             // Must be called before the FilePathWatcherDelegate is deleted.
             void SetCancelled() {
                 cancelled_ = true;
@@ -95,7 +96,7 @@ file_path_watcher.Watch(path, callback);
                 return cancelled_;
             }
 
-        private:
+         private:
             bool cancelled_ = false;
         };
 
@@ -115,6 +116,6 @@ file_path_watcher.Watch(path, callback);
     private:
         std::unique_ptr<FilePathWatcherDelegate> impl_;
     };
-} // namespace gogo
+}  // namespace gogo
 
-#endif //SKYDATA_LISTENER_H
+#endif  // SKYDATA_LISTENER_H

@@ -49,7 +49,6 @@ void ToBackendConnection::handle_connect(const boost::system::error_code& error)
     } else {
         isConnected = false;
         std::cerr << "ERROR: to_backend_connection::handle_connect" << std::endl;
-        using namespace std::chrono_literals;
         std::this_thread::sleep_for(1000ms);
         boost::asio::async_connect(m_socket, endpoint,
                                    boost::bind(
@@ -65,7 +64,7 @@ void ToBackendConnection::handle_read(const boost::system::error_code& error) {
             long offset = static_cast<char *>(memchr(m_read_msg, '\b', BUFFER_SIZE)) - m_read_msg;
 
             // Firstly deserialize message
-            std::string str_mes (m_read_msg, offset);
+            std::string str_mes(m_read_msg, offset);
             std::stringstream str(str_mes);
             boost::archive::text_iarchive iarch(str);
             Message msg;
@@ -103,8 +102,7 @@ void ToBackendConnection::handle_read(const boost::system::error_code& error) {
         } catch (std::exception& err) {
             std::cerr << err.what();
         }
-    }
-    else {
+    } else {
         isConnected = false;
         std::cerr << "ERROR: ToBackendConnection::handle_read" << std::endl;
         std::cerr << "Trying to reconnect!" << std::endl;
@@ -142,8 +140,7 @@ void ToBackendConnection::handle_write(const boost::system::error_code& error) {
                                                     this,
                                                     boost::asio::placeholders::error));
         }
-    }
-    else {
+    } else {
         isConnected = false;
         std::cerr << "ERROR: ToBackendConnection::handle_write" << std::endl;
         std::cerr << "Trying to reconnect!" << std::endl;

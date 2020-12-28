@@ -1,11 +1,11 @@
 
-#ifndef PROJECT_INTERNALDATABASE_H
-#define PROJECT_INTERNALDATABASE_H
+#ifndef PROJECT_DATA_BASES_INTERNALDB_INCLUDE_INTERNALDATABASE_H_
+#define PROJECT_DATA_BASES_INTERNALDB_INCLUDE_INTERNALDATABASE_H_
 
 #include "Message.h"
 
 class InternalDataBase {
-public:
+ public:
     InternalDataBase() = default;
     virtual ~InternalDataBase() = default;
 
@@ -15,4 +15,4 @@ public:
     virtual void close() = 0;
 };
 
-#endif //PROJECT_INTERNALDATABASE_H
+#endif  // PROJECT_DATA_BASES_INTERNALDB_INCLUDE_INTERNALDATABASE_H_

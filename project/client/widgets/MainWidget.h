@@ -1,25 +1,27 @@
-#ifndef TEST_MAINWIDGET_H
-#define TEST_MAINWIDGET_H
+#ifndef PROJECT_CLIENT_WIDGETS_MAINWIDGET_H_
+#define PROJECT_CLIENT_WIDGETS_MAINWIDGET_H_
 
 #include <QWidget>
 #include <QLineEdit>
 #include <QLine>
 #include <QLabel>
 #include <QFileDialog>
-#include <string>
 #include <QGridLayout>
+
+#include <string>
+#include <vector>
 
 class QPushButton;
 class QLineEdit;
 class QLabel;
 class QFileDialog;
 
-// This is the declaration of our MainWidget class
-// The definition/implementation is in mainwidget.cpp
-class MainWidget : public QWidget {
-Q_OBJECT
-public:
 
+class MainWidget : public QWidget {
+
+    Q_OBJECT
+
+ public:
     explicit MainWidget(std::string &name,
                         std::string &device,
                         std::string &sync_folder,
@@ -27,13 +29,13 @@ public:
 
     ~MainWidget();
 
-private slots:
+ private slots:
 
-    void onButtonReleased(); // Handler for button presses
+    void onButtonReleased();  // Handler for button presses
 
     void onDialogButton();
 
-private:
+ private:
     std::string &m_name;
     std::string &m_device;
     std::string &m_sync_folder;
@@ -46,4 +48,4 @@ private:
 };
 
 
-#endif //TEST_MAINWIDGET_H
+#endif  // PROJECT_CLIENT_WIDGETS_MAINWIDGET_H_

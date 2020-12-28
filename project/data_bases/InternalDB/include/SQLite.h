@@ -1,5 +1,5 @@
-#ifndef PROJECT_SQLITE_H
-#define PROJECT_SQLITE_H
+#ifndef PROJECT_DATA_BASES_INTERNALDB_INCLUDE_SQLITE_H_
+#define PROJECT_DATA_BASES_INTERNALDB_INCLUDE_SQLITE_H_
 
 #include <sqlite3.h>
 #include <memory>
@@ -7,7 +7,7 @@
 #include "Message.h"
 
 class SQLite: public InternalDataBase {
-public:
+ public:
     SQLite();
     ~SQLite() override;
 
@@ -16,14 +16,13 @@ public:
     int open() override;
     void close() override;
     static int callback(void *NotUsed, int argc, char **argv, char **azColName);
-private:
+ private:
     sqlite3 *m_data_base{};
 
     int create_table_messages();
     bool insert(Message &message);
     bool del(Message &message);
     bool find(Message &message);
-
 };
 
-#endif //PROJECT_SQLITE_H
+#endif  // PROJECT_DATA_BASES_INTERNALDB_INCLUDE_SQLITE_H_

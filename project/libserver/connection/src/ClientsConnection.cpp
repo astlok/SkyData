@@ -16,7 +16,6 @@ ClientsConnection::ClientsConnection(
 void ClientsConnection::write(const Message &msg) {
     boost::asio::post(m_io_context,
                       boost::bind(&ClientsConnection::do_write, this, msg, false));
-
 }
 
 void ClientsConnection::close() {
@@ -35,7 +34,6 @@ void ClientsConnection::handle_connect(const boost::system::error_code &error) {
                                             this,
                                             boost::asio::placeholders::error));
     } else {
-        using namespace std::chrono_literals;
         std::this_thread::sleep_for(1000ms);
         // Trying to reconnect!
         boost::asio::async_connect(m_socket, endpoint,

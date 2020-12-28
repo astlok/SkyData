@@ -1,5 +1,6 @@
-#include <sstream>
 #include "Message.h"
+
+#include <sstream>
 
 std::string serialize(Message &message) {
     std::stringstream stream;

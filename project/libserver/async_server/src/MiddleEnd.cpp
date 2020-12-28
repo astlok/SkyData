@@ -37,7 +37,7 @@ void MiddleEnd::on_read_message(char* msg) {
 }
 
 void MiddleEnd::send_message_if_connected(const std::string &connectionID) {
-    for(auto& connection: m_connections) {
+    for (auto& connection : m_connections) {
 //        std::cout << "Messages amount for " <<
 //                      connection->id << ": " <<
 //                      QueueManager::queue_manager().get_client_messages_amount(connection->id) <<

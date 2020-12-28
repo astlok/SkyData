@@ -9,8 +9,8 @@ include_directories(common)
 include_directories(libserver/async_server/include)
 include_directories(libserver/connection/include)
 
-include_directories(data_bases/Cloud_Storage/include)
-include_directories(data_bases/Internal_DB/include)
+include_directories(data_bases/CloudStorage/include)
+include_directories(data_bases/InternalDB/include)
 
 include_directories(client/commander/include)
 include_directories(client/observer/include)

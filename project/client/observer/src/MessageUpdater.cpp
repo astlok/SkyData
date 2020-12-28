@@ -7,7 +7,6 @@ void MessageUpdater::to_client_send(ClientsConnection &cl_con, ClientToStorageCo
     mtx.lock();
     if (!processed_messages.empty()) {
         while (!processed_messages.empty()) {
-
             if (!processed_messages.front().second) {
                 sender.send(processed_messages.front().first, cl_con, storage_conn, ClientSender::ONLY_SQL);
             } else {
@@ -18,15 +17,10 @@ void MessageUpdater::to_client_send(ClientsConnection &cl_con, ClientToStorageCo
         }
     }
     mtx.unlock();
-
 }
 
 void MessageUpdater::push(const std::shared_ptr<Message> &message, bool is_from_queue) {
     mtx_stat.lock();
     processed_messages.push(std::pair<std::shared_ptr<Message>, bool>(message, is_from_queue));
     mtx_stat.unlock();
-}
-
-MessageUpdater::MessageUpdater() {
-
 }

@@ -1,5 +1,8 @@
-#ifndef ASYNC_CLIENT_QUEUE_SERVER_MIDDLEEND_H
-#define ASYNC_CLIENT_QUEUE_SERVER_MIDDLEEND_H
+#ifndef PROJECT_LIBSERVER_ASYNC_SERVER_INCLUDE_MIDDLEEND_H_
+#define PROJECT_LIBSERVER_ASYNC_SERVER_INCLUDE_MIDDLEEND_H_
+
+#include <memory>
+#include <string>
 
 #include "AbstractServer.h"
 #include "ToBackendConnection.h"
@@ -8,8 +11,8 @@
 class ToBackendConnection;
 
 class MiddleEnd : public AbstractServer{
-public:
-    MiddleEnd(boost::asio::io_context& io_context,
+ public:
+    explicit MiddleEnd(boost::asio::io_context& io_context,
               const boost::asio::ip::tcp::endpoint& endpoint);
 
 
@@ -29,9 +32,9 @@ public:
 
     virtual ~MiddleEnd() = default;
 
-private:
+ private:
     std::shared_ptr<ToBackendConnection> m_backend;
 };
 
 
-#endif //ASYNC_CLIENT_QUEUE_SERVER_MIDDLEEND_H
+#endif  // PROJECT_LIBSERVER_ASYNC_SERVER_INCLUDE_MIDDLEEND_H_

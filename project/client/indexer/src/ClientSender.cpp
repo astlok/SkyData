@@ -23,8 +23,7 @@ int ClientSender::send(std::shared_ptr<Message> &message, ClientsConnection &cl_
         return EXIT_SUCCESS;
     } else if (message->status == DELETE) {
         m_cloud_storage.remove_from_cloud(message, storage_conn);
-    }
-    else if (m_cloud_storage.send_to_cloud(message, storage_conn)) {
+    } else if (m_cloud_storage.send_to_cloud(message, storage_conn)) {
         return 1;
     }
 
