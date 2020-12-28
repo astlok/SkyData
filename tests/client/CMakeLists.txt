@@ -37,4 +37,4 @@ set (
 
 
 add_executable(client_test tests.cpp  ${LIB_SOURCE_FILES} ${OBSERVER_SRC} ${SRC} ${DB_SRC} ${MDA})
-target_link_libraries(client_test ${GTEST_LIBRARIES} pthread -lgmock libserver sqlite3 liblistener)
+target_link_libraries(client_test ${GTEST_LIBRARIES} pthread libserver sqlite3 liblistener)

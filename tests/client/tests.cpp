@@ -1,12 +1,11 @@
 #include <iostream>
 #include "ClientsConnection.h"
 #include "MessageUpdater.h"
-#include "../../liblistener/include/Listener.h"
+#include "Listener.h"
 #include "Observer.h"
 #include "ClientSender.h"
 #include "MessageListener.h"
 #include "gtest/gtest.h"
-#include "gmock/gmock.h"
 
 
 std::queue<std::pair<std::shared_ptr<Message>, bool>> MessageUpdater::processed_messages = std::queue<std::pair<std::shared_ptr<Message>, bool>> ();
