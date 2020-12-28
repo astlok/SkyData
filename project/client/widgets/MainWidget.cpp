@@ -11,7 +11,6 @@ MainWidget::MainWidget(std::string &name, std::string &device, std::string &sync
     m_main_layout = new QGridLayout;
     m_button = new QPushButton(tr("Sync"));
     m_button_dialog = new QPushButton(tr("Chose directory"));
-    m_dialog = new QFileDialog();
 
     m_line_edits.resize(3);
     for (auto &m_line_edit : m_line_edits) {
@@ -38,7 +37,6 @@ MainWidget::MainWidget(std::string &name, std::string &device, std::string &sync
 
 MainWidget::~MainWidget() {
     delete m_button;
-    delete m_dialog;
     delete m_main_layout;
     for (auto line : m_line_edits) {
         delete line;
@@ -56,6 +54,5 @@ void MainWidget::onButtonReleased() {
 }
 
 void MainWidget::onDialogButton() {
-    m_dialog->show();
     m_line_edits[2]->setText(QFileDialog::getExistingDirectory());
 }

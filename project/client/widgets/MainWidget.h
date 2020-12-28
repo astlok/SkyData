@@ -41,7 +41,6 @@ class MainWidget : public QWidget {
     std::string &m_sync_folder;
     QPushButton* m_button;
     QPushButton* m_button_dialog;
-    QFileDialog* m_dialog;
     std::vector<QLineEdit*> m_line_edits;
     std::vector<QLabel*> m_labels;
     QGridLayout * m_main_layout;
